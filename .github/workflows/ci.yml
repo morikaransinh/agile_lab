@@ -28,3 +28,19 @@ jobs:
         run: python -m scripts.validate_products
       - name: Run unit and browser tests
         run: python -m pytest -q
+      - name: Build, run, and inspect Docker image
+        run: |
+          docker build --tag everyday-market:ci .
+          container_id=$(docker run --detach --publish 5000:5000 --env SECRET_KEY=ci-only-secret everyday-market:ci)
+          cleanup() {
+            docker stop "$container_id" >/dev/null
+          }
+          trap cleanup EXIT
+          for attempt in {1..20}; do
+            if curl --fail --silent http://127.0.0.1:5000/ >/dev/null; then
+              break
+            fi
+            sleep 2
+          done
+          curl --fail --silent http://127.0.0.1:5000/ >/dev/null
+          docker inspect --format='{{.State.Status}}' "$container_id"

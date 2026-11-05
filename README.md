@@ -62,7 +62,9 @@ git --no-pager log --oneline --graph --decorate
 ```
 
 GitHub Actions runs the catalog validation script and pytest on pushes to
-`main` and `feature/**`, and on pull requests targeting `main`.
+`main` and `feature/**`, and on pull requests targeting `main`. It also builds
+the Docker image, starts a container, checks the product page over HTTP, and
+inspects the running container.
 
 ## Jira
 
