@@ -6,6 +6,21 @@
     <h1>Find your everyday favorites</h1>
     <p>Browse personal-care essentials at a glance.</p>
   </section>
+  <form class="filter-form" action="{{ url_for('product_list') }}" method="get">
+    <label for="q">Search products</label>
+    <input id="q" name="q" value="{{ query }}" placeholder="Name, category, or description">
+    <label for="category">Category</label>
+    <select id="category" name="category">
+      <option value="">All categories</option>
+      {% for item in categories %}
+        <option value="{{ item }}" {% if category == item %}selected{% endif %}>{{ item }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit">Filter</button>
+    {% if query or category %}
+      <a href="{{ url_for('product_list') }}">Clear filters</a>
+    {% endif %}
+  </form>
   <section class="product-grid" aria-label="Product catalog">
     {% for product in products %}
       <article class="product-card">

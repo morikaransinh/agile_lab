@@ -10,6 +10,29 @@ def test_catalog_displays_all_products():
         assert product["name"].encode() in response.data
 
 
+def test_product_filter_searches_name_and_category():
+    response = app.test_client().get("/?q=serum")
+
+    assert response.status_code == 200
+    assert b"Hydrating Serum" in response.data
+    assert b"Everyday Shampoo" not in response.data
+
+
+def test_product_filter_limits_results_to_category():
+    response = app.test_client().get("/?category=Hair+Care")
+
+    assert response.status_code == 200
+    assert b"Everyday Shampoo" in response.data
+    assert b"Daily Moisturizer" not in response.data
+
+
+def test_product_filter_shows_empty_state_when_no_product_matches():
+    response = app.test_client().get("/?q=not-a-product")
+
+    assert response.status_code == 200
+    assert b"No products found." in response.data
+
+
 def test_product_detail_displays_product():
     response = app.test_client().get("/products/everyday-shampoo")
 
