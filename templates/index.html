@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Products | Everyday Market{% endblock %}
+{% block content %}
+  <section class="page-heading">
+    <p class="eyebrow">Thoughtful essentials</p>
+    <h1>Find your everyday favorites</h1>
+    <p>Browse personal-care essentials at a glance.</p>
+  </section>
+  <section class="product-grid" aria-label="Product catalog">
+    {% for product in products %}
+      <article class="product-card">
+        <p class="eyebrow">{{ product.category }}</p>
+        <h2><a href="{{ url_for('product_detail', product_id=product.id) }}">{{ product.name }}</a></h2>
+        <p>{{ product.description }}</p>
+        <p class="price">${{ "%.2f"|format(product.price) }}</p>
+        <p class="muted">Including tax: ${{ "%.2f"|format(calculate_final_price(product.price)) }}</p>
+      </article>
+    {% else %}
+      <p data-testid="empty-state">No products found.</p>
+    {% endfor %}
+  </section>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Log in | Everyday Market{% endblock %}
+{% block content %}
+  <section class="form-card">
+    <p class="eyebrow">Your account</p>
+    <h1>Log in</h1>
+    <form action="{{ url_for('login') }}" method="post">
+      <label for="username">Username</label>
+      <input id="username" name="username" autocomplete="username" required>
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" autocomplete="current-password" required>
+      <button type="submit">Log in</button>
+    </form>
+    <p class="muted">Local demo credentials are documented in the README.</p>
+  </section>
+{% endblock %}

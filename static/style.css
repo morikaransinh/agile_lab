@@ -1,0 +1,106 @@
+:root {
+  color-scheme: light;
+  font-family: "Segoe UI", sans-serif;
+  color: #23332d;
+  background: #f5f7f3;
+}
+
+* { box-sizing: border-box; }
+
+body { margin: 0; }
+
+a { color: #176b53; }
+
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem max(1.5rem, calc((100% - 1080px) / 2));
+  background: #fff;
+  border-bottom: 1px solid #e1e8e2;
+}
+
+.brand { font-size: 1.15rem; font-weight: 700; text-decoration: none; }
+
+nav { display: flex; align-items: center; gap: 1.25rem; }
+
+nav a, .link-button { text-decoration: none; }
+
+.inline-form { display: inline; }
+
+.link-button {
+  padding: 0;
+  color: #176b53;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+}
+
+.container { width: min(1080px, calc(100% - 2rem)); margin: 3rem auto; }
+
+.page-heading { margin-bottom: 2rem; }
+
+.page-heading h1, .form-card h1, .detail-card h1 { margin: 0.3rem 0; }
+
+.eyebrow {
+  margin: 0 0 0.5rem;
+  color: #527b69;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1rem; }
+
+.product-card, .detail-card, .form-card {
+  padding: 1.5rem;
+  background: #fff;
+  border: 1px solid #e1e8e2;
+  border-radius: 12px;
+}
+
+.product-card h2 { font-size: 1.15rem; }
+
+.product-card h2 a { text-decoration: none; }
+
+.price { font-size: 1.2rem; font-weight: 700; }
+
+.muted { color: #65756c; font-size: 0.9rem; }
+
+.back-link { display: inline-block; margin-bottom: 1rem; }
+
+.detail-card { max-width: 640px; }
+
+.form-card { max-width: 440px; }
+
+.form-card form { display: grid; gap: 0.6rem; margin: 1.5rem 0; }
+
+input {
+  width: 100%;
+  padding: 0.7rem;
+  border: 1px solid #bdcbc1;
+  border-radius: 6px;
+  font: inherit;
+}
+
+button, .button-link {
+  display: inline-block;
+  width: fit-content;
+  padding: 0.7rem 1rem;
+  color: #fff;
+  background: #176b53;
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+  font: inherit;
+  text-decoration: none;
+}
+
+.message { padding: 0.8rem 1rem; border-radius: 6px; background: #fff3e8; }
+
+@media (max-width: 560px) {
+  .site-header { align-items: flex-start; gap: 1rem; }
+  nav { flex-wrap: wrap; justify-content: flex-end; gap: 0.75rem; }
+}
