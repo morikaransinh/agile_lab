@@ -43,6 +43,16 @@ nav a, .link-button { text-decoration: none; }
 
 .page-heading h1, .form-card h1, .detail-card h1 { margin: 0.3rem 0; }
 
+.filter-form {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.filter-form input, .filter-form select { width: auto; min-width: 180px; }
+
 .eyebrow {
   margin: 0 0 0.5rem;
   color: #527b69;

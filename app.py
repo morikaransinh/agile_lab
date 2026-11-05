@@ -18,7 +18,29 @@ def create_app():
 
     @app.get("/")
     def product_list():
-        return render_template("index.html", products=PRODUCTS, query="", category="")
+        query = request.args.get("q", "").strip()
+        category = request.args.get("category", "").strip()
+        query_match = query.casefold()
+        products = [
+            product
+            for product in PRODUCTS
+            if (
+                not query_match
+                or query_match
+                in " ".join(
+                    (product["name"], product["category"], product["description"])
+                ).casefold()
+            )
+            and (not category or product["category"] == category)
+        ]
+        categories = sorted({product["category"] for product in PRODUCTS})
+        return render_template(
+            "index.html",
+            products=products,
+            categories=categories,
+            query=query,
+            category=category,
+        )
 
     @app.get("/products/<product_id>")
     def product_detail(product_id):
