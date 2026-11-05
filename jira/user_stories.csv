@@ -1,0 +1,4 @@
+Issue Type,Summary,Description,Priority,Story Points,Labels
+Story,View the product catalog,"As a shopper, I want to browse a catalog of products with names, categories, descriptions, and prices so that I can discover items to buy.",High,5,product-catalog
+Story,Search and filter products,"As a shopper, I want to search products and filter by category so that I can quickly find items that match my needs.",High,3,product-filter
+Story,View product details,"As a shopper, I want to open a product detail page with its description and tax-inclusive price so that I can make an informed choice.",Medium,3,product-details

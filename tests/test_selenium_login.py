@@ -1,4 +1,7 @@
+import os
+import shutil
 import threading
+from pathlib import Path
 
 import pytest
 from selenium import webdriver
@@ -23,6 +26,42 @@ def live_server():
 
 @pytest.fixture
 def browser():
+    chrome_candidates = [
+        os.environ.get("CHROME_BIN"),
+        shutil.which("chrome"),
+        shutil.which("google-chrome"),
+        shutil.which("chromium"),
+        shutil.which("chromium-browser"),
+    ]
+    if os.name == "nt":
+        chrome_candidates.extend(
+            [
+                str(
+                    Path(os.environ.get("ProgramFiles", ""))
+                    / "Google"
+                    / "Chrome"
+                    / "Application"
+                    / "chrome.exe"
+                ),
+                str(
+                    Path(os.environ.get("ProgramFiles(x86)", ""))
+                    / "Google"
+                    / "Chrome"
+                    / "Application"
+                    / "chrome.exe"
+                ),
+                str(
+                    Path(os.environ.get("LOCALAPPDATA", ""))
+                    / "Google"
+                    / "Chrome"
+                    / "Application"
+                    / "chrome.exe"
+                ),
+            ]
+        )
+    if not any(path and Path(path).is_file() for path in chrome_candidates):
+        pytest.skip("Chrome is not installed; install Chrome to run the Selenium tests.")
+
     options = webdriver.ChromeOptions()
     options.add_argument("--headless=new")
     options.add_argument("--no-sandbox")
@@ -35,6 +74,7 @@ def browser():
     driver.quit()
 
 
+@pytest.mark.selenium
 def test_successful_login_shows_dashboard(browser, live_server):
     browser.get(f"{live_server}/login")
     browser.find_element(By.ID, "username").send_keys("demo")
@@ -47,6 +87,7 @@ def test_successful_login_shows_dashboard(browser, live_server):
     assert heading.text == "Welcome, demo!"
 
 
+@pytest.mark.selenium
 def test_invalid_login_shows_error(browser, live_server):
     browser.get(f"{live_server}/login")
     browser.find_element(By.ID, "username").send_keys("demo")
